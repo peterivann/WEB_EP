@@ -40,6 +40,8 @@ function p_sign_in(){
         }
     }
 
+
+
     var bt_a_sign_up = document.getElementById("a_sign_up");
     var bt_come_in = document.getElementById("come_in");
 
