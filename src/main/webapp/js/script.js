@@ -20,6 +20,17 @@ function p_sign_in(){
                 hash : 0
             }
 
+
+
+
+
+
+
+
+
+
+
+
             request(auto, "POST", "api/auto", function (res){
                 var t = document.getElementById("massage_1");
                 if (res.massage == "Yes") {
