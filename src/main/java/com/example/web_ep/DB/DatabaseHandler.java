@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class DatabaseHandler extends Configs {
+public class DatabaseHandler extends Configs implements IDateBaseHandler {
     private static Connection dbConnection;
 
     public static Connection getDbConnection() {
@@ -30,7 +30,7 @@ public class DatabaseHandler extends Configs {
         }
     }
 
-    public static void signUpUser(String login, String password){
+    public void signUpUser(String login, String password){
         String insert = "INSERT INTO " + Const.USER_TABLE + "(" +
                 Const.USER_LOGIN + "," + Const.USER_PASSWORD + ")" +
                 "VALUES(?,?)";
@@ -45,7 +45,28 @@ public class DatabaseHandler extends Configs {
         closeConnection();
     }
 
-    public static Boolean getUser(String login, String password) {
+    public Boolean getUserRegistr(String login) {
+        ResultSet resSet;
+
+        String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " +
+                Const.USER_LOGIN + "=?";
+
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, login);
+            resSet = prSt.executeQuery();
+            if (resSet.next()) {
+                closeConnection();
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        closeConnection();
+        return false;
+    }
+
+    public Boolean getUserAuth(String login, String password) {
         ResultSet resSet;
 
         String select = "SELECT * FROM " + Const.USER_TABLE + " WHERE " +
@@ -67,7 +88,7 @@ public class DatabaseHandler extends Configs {
         return false;
     }
 
-    public static void InsertApplication(String id_user, Integer applic_poz, String applic_topic, String applic_contavt, String applic_comment) {
+    public void InsertApplication(String id_user, Integer applic_poz, String applic_topic, String applic_contavt, String applic_comment) {
         String insert = "INSERT INTO " + Const.USER_APPLIC_TABLE + "(" +
                 Const.USER_APPLIC_ID_USER + "," + Const.USER_APPLIC_POZ + "," + Const.USER_APPLIC_TOPIC + "," + Const.USER_APPLIC_CONTACT + "," + Const.USER_APPLIC_COMMENT + ")" +
                 "VALUES(?,?,?,?,?)";
@@ -86,17 +107,16 @@ public class DatabaseHandler extends Configs {
         closeConnection();
     }
 
-    public static String GetId(String login, String password) {
+    public String GetId(String login) {
 
         ResultSet resSet = null;
         String id = "";
 
         String select = "SELECT " + Const.USER_ID + " FROM " + Const.USER_TABLE + " WHERE " +
-                Const.USER_LOGIN + "=? AND " + Const.USER_PASSWORD + "=?";
+                Const.USER_LOGIN + "=?";
         try {
             PreparedStatement prSt = getDbConnection().prepareStatement(select);
             prSt.setString(1, login);
-            prSt.setString(2, password);
             resSet = prSt.executeQuery();
             while (resSet.next()) {
                 id = resSet.getString(Const.USER_ID);
@@ -110,7 +130,7 @@ public class DatabaseHandler extends Configs {
         return id;
     }
 
-    public static Integer GetPoz(String id_user) {
+    public Integer GetPoz(String id_user) {
 
         ResultSet resSet = null;
         int n = 1;
@@ -132,7 +152,7 @@ public class DatabaseHandler extends Configs {
         return n;
     }
 
-    public static void DeleteApplication(String id_application) {
+    public void DeleteApplication(String id_application) {
 
         String delete = "DELETE FROM " + Const.USER_APPLIC_TABLE + " WHERE " +
                 Const.USER_APPLIC_ID + "=?";
@@ -146,7 +166,7 @@ public class DatabaseHandler extends Configs {
         closeConnection();
     }
 
-    public static ArrayList<ArrayList<String>> GetApplication(String id_user) {
+    public ArrayList<ArrayList<String>> GetApplication(String id_user) {
 
         ResultSet resSet = null;
 

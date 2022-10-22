@@ -5,8 +5,6 @@ public class Application {
     private String topic;
     private String contact;
     private String comment;
-    private String login_user;
-    private String pass_user;
 
     public int getPoz() {
         return poz;
@@ -40,19 +38,4 @@ public class Application {
         this.comment = comment;
     }
 
-    public String getLogin_user() {
-        return login_user;
-    }
-
-    public void setLogin_user(String login_user) {
-        this.login_user = login_user;
-    }
-
-    public String getPass_user() {
-        return pass_user;
-    }
-
-    public void setPass_user(String pass_user) {
-        this.pass_user = pass_user;
-    }
 }

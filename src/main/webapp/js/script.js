@@ -1,8 +1,5 @@
 var bt_sign_in = document.getElementById("sign_in");
 var bt_sign_up = document.getElementById("sign_up");
-var login_g;
-var pass_g;
-var hash;
 var arrr;
 
 function p_sign_in(){
@@ -20,12 +17,11 @@ function p_sign_in(){
                 hash : 0
             }
 
-            request(auto, "POST", "api/auto", function (res){
+            request(auto, "POST", "api/users/user", function (res){
                 var t = document.getElementById("massage_1");
                 if (res.massage == "Yes") {
-                    login_g = inp_login;
-                    pass_g = inp_pass;
-                    hash = res.hash;
+                    localStorage.setItem("login", inp_login);
+                    localStorage.setItem("token", res.hash);
                     p_main_1();
                 } else {
                     document.getElementById("login_in").value = "";
@@ -64,12 +60,11 @@ function p_sign_up(){
                     hash : 0
                 }
 
-                request(reg, "POST", "api/reg", function (res){
+                request(reg, "POST", "api/users", function (res){
                     var t = document.getElementById("massage_1");
                     if (res.massage == "Yes") {
-                        login_g = inp_login;
-                        pass_g = inp_pass;
-                        hash = res.hash;
+                        localStorage.setItem("login", inp_login);
+                        localStorage.setItem("token", res.hash);
                         p_main_1();
                     } else {
                         document.getElementById("login_in").value = "";
@@ -109,7 +104,6 @@ function p_main_1(){
     bt_main_1.addEventListener("click", p_main_1);
     bt_main_2.addEventListener("click", p_main_2);
     bt_main_3.addEventListener("click", p_main_3);
-    hash_();
 }
 
 function p_main_2(){
@@ -125,10 +119,8 @@ function p_main_2(){
                 topic: inp_topic,
                 contact: inp_contact,
                 comment: inp_comment,
-                login_user: login_g,
-                pass_user: pass_g,
             }
-            request(appl, "POST", "api/add_up", function (res){
+            request(appl, "POST", "api/applications", function (res){
                 document.querySelector('input[name="test"]:checked').value = "";
                 document.getElementById("contact_in").value = "";
                 document.getElementById("comment_in").value = "";
@@ -150,7 +142,6 @@ function p_main_2(){
     bt_main_2.addEventListener("click", p_main_2);
     bt_main_3.addEventListener("click", p_main_3);
     bt_ok.addEventListener("click", add_ap);
-    hash_();
 }
 
 function p_main_3(){
@@ -161,11 +152,9 @@ function p_main_3(){
         var arr = [table];
         var appl = {
             arr: arr,
-            login_user: login_g,
-            pass_user: pass_g,
         }
 
-        request(appl, "POST", "api/table", function (res){
+        request(appl, "POST", "api/applications/user", function (res){
             var n = 0;
             var p_table = document.getElementById("table_app");
             str = "<tr>\n" +
@@ -197,7 +186,7 @@ function p_main_3(){
         var delet = {
             element: arrr,
         }
-        request(delet, "POST", "api/delet", function (res){
+        request(delet, "POST", "api/applications/user/application", function (res){
             p_main_3();
         });
     }
@@ -213,7 +202,6 @@ function p_main_3(){
     bt_main_1.addEventListener("click", p_main_1);
     bt_main_2.addEventListener("click", p_main_2);
     bt_main_3.addEventListener("click", p_main_3)
-    hash_();
 }
 
 bt_sign_in.addEventListener("click", p_sign_in);
