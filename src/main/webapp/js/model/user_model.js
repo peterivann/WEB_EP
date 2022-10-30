@@ -17,11 +17,11 @@ var user_model = (function() {
         }
 
         function auto_(callback, user) {
-            request(user.get(), "POST", "api/users/user", callback);
+            request(user.get(), "POST", "api/users/user", callback, function() {page_sign_in.render()});
         }
 
         function reg_(callback, user) {
-            request(user.get(), "POST", "api/users", callback);
+            request(user.get(), "POST", "api/users", callback, function() {page_sign_in.render()});
         }
 
         return {

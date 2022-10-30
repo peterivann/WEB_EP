@@ -19,11 +19,11 @@ var del_model = (function() {
         var del = new Del();
 
         function table_ (callback) {
-            request(del.get(), "GET", "api/applications/user", callback);
+            request(del.get(), "GET", "api/applications/user", callback, function() {page_sign_in.render()});
         }
 
         function del_ (callback) {
-            request(arrr, "DELETE", "api/applications/user/application", callback);
+            request(arrr, "DELETE", "api/applications/user/application", callback, function() {page_sign_in.render()});
         }
 
         return {

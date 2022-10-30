@@ -1,4 +1,4 @@
-function request(data, method, url, callback){
+function request(data, method, url, callback, error_hash){
 
     var xhr = new XMLHttpRequest();
     var flagAsync = true;
@@ -27,7 +27,7 @@ function request(data, method, url, callback){
                 }
             }
             else {
-                page_sign_in.render()
+                error_hash();
             }
         }
     };

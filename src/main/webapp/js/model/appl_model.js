@@ -18,7 +18,7 @@ var appl_model = (function() {
         }
 
         function add_apl_(callback, application) {
-            request(application.get(), "POST", "api/applications", callback);
+            request(application.get(), "POST", "api/applications", callback, function() {page_sign_in.render()});
         }
 
         return {
