@@ -25,7 +25,7 @@ function select(){
             }
             document.querySelector('.span1').value = b;
             console.log(document.querySelector('.span1').value);
-            arrr = arr_
+            arrr = b
         });
     });
 }

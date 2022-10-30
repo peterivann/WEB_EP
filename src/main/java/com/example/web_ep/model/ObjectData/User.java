@@ -1,10 +1,9 @@
-package com.example.web_ep.ObjectData;
+package com.example.web_ep.model.ObjectData;
 
 public class User
 {
     private String login;
     private String pass;
-    private String massage;
     private int hash;
     public String getLogin() {
         return login;
@@ -20,14 +19,6 @@ public class User
 
     public void setPass(String pass) {
         this.pass = pass;
-    }
-
-    public String getMassage() {
-        return massage;
-    }
-
-    public void setMassage(String massage) {
-        this.massage = massage;
     }
 
     public int getHash() {

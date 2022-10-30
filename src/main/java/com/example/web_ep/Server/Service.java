@@ -1,16 +1,18 @@
 package com.example.web_ep.Server;
 
-import com.example.web_ep.ObjectData.Application;
-import com.example.web_ep.ObjectData.Delete;
-import com.example.web_ep.ObjectData.Table;
-import com.example.web_ep.ObjectData.User;
+import com.example.web_ep.model.ObjectData.Application;
+import com.example.web_ep.model.ObjectData.User;
+import com.example.web_ep.model.ObjectData.ITable;
 import com.example.web_ep.model.IModel;
-import jakarta.ws.rs.core.HttpHeaders;
-import jakarta.ws.rs.POST;
-
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Produces;
+
+import jakarta.ws.rs.core.HttpHeaders;
+
 
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
@@ -25,13 +27,15 @@ import jakarta.inject.Inject;
 public class Service {
 
     @Inject
+    ITable table;
+    @Inject
     IModel model;
     static String salt = "sadfasdfasdhndk";
     @POST
     @Path("/users/user")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response auth(String userJSON, @Context HttpHeaders httpHeaders)
+    public Response auth(String userJSON)
     {
         Jsonb jsonb = JsonbBuilder.create();
         User user;
@@ -47,10 +51,9 @@ public class Service {
             if (model.AuthUser(user)){
                 int a = (salt + user.getLogin() + salt).hashCode();
                 user.setHash(a);
-                user.setMassage("Yes");
             }
             else {
-                user.setMassage("User not found");
+                return Response.status(Response.Status.BAD_REQUEST).build();
             }
             resultJSON = jsonb.toJson(user);
         } catch (Exception e) {
@@ -63,7 +66,7 @@ public class Service {
     @Path("/users")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response reg(String userJSON, @Context HttpHeaders httpHeaders)
+    public Response reg(String userJSON)
     {
         Jsonb jsonb = JsonbBuilder.create();
         User user;
@@ -77,13 +80,12 @@ public class Service {
             }
 
             if(model.CheckUser(user)){
-                user.setMassage("Such a user already exists");
+                return Response.status(Response.Status.BAD_REQUEST).build();
             }
             else {
                 model.RegUser(user);
                 int a = (salt + user.getLogin() + salt).hashCode();
                 user.setHash(a);
-                user.setMassage("Yes");
             }
             resultJSON = jsonb.toJson(user);
         } catch (Exception e) {
@@ -119,7 +121,7 @@ public class Service {
                 resultJSON = jsonb.toJson(application);
             }
             else{
-                resultJSON = "No";
+                return Response.status(Response.Status.NOT_FOUND).build();
             }
 
         } catch (Exception e) {
@@ -128,24 +130,17 @@ public class Service {
         return Response.ok(resultJSON).build();
     }
 
-    @POST
+    @GET
     @Path("/applications/user")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response table(String userJSON, @Context HttpHeaders httpHeaders)
+    public Response table(@Context HttpHeaders httpHeaders)
     {
         Jsonb jsonb = JsonbBuilder.create();
-        Table table;
         String token;
         String login;
         String resultJSON;
         try {
-            try {
-                   table = jsonb.fromJson(userJSON, Table.class);
-            }
-            catch (Exception e) {
-                throw new Exception("Error while JSON transforming.");
-            }
 
             token = httpHeaders.getHeaderString("TOKEN");
             login = httpHeaders.getHeaderString("LOGIN");
@@ -153,11 +148,11 @@ public class Service {
             int b = (salt + login + salt).hashCode();
 
             if (token.equals(Integer.toString(b))){
-                model.GetApl(table, login);
+               model.GetApl(table, login);
                 resultJSON = jsonb.toJson(table);
             }
             else{
-                resultJSON = "No";
+                return Response.status(Response.Status.NOT_FOUND).build();
             }
 
         } catch (Exception e) {
@@ -166,25 +161,18 @@ public class Service {
         return Response.ok(resultJSON).build();
     }
 
-    @POST
+    @DELETE
     @Path("/applications/user/application")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response delet(String userJSON, @Context HttpHeaders httpHeaders)
+    public Response delet(@Context HttpHeaders httpHeaders)
     {
-        Jsonb jsonb = JsonbBuilder.create();
-        Delete delete;
+        String delete;
         String token;
         String login;
-        String resultJSON;
         try {
-            try {
-                delete = jsonb.fromJson(userJSON, Delete.class);
-            }
-            catch (Exception e) {
-                throw new Exception("Error while JSON transforming.");
-            }
 
+            delete = httpHeaders.getHeaderString("ARR");
             token = httpHeaders.getHeaderString("TOKEN");
             login = httpHeaders.getHeaderString("LOGIN");
 
@@ -192,15 +180,14 @@ public class Service {
 
             if (token.equals(Integer.toString(b))){
                 model.DeleteApl(delete);
-                resultJSON = jsonb.toJson(delete);
+                return Response.status(Response.Status.OK).build();
             }
             else{
-                resultJSON = "No";
+                return Response.status(Response.Status.NOT_FOUND).build();
             }
 
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
-        return Response.ok(resultJSON).build();
     }
 }

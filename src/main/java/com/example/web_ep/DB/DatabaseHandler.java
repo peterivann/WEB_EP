@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class DatabaseHandler extends Configs implements IDateBaseHandler {
-    private static Connection dbConnection;
+    private Connection dbConnection;
 
-    public static Connection getDbConnection() {
+    public Connection getDbConnection() {
         String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName + "?useSSL=false";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -21,7 +21,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         return dbConnection;
     }
 
-    public static void closeConnection() {
+    public void closeConnection() {
         if (dbConnection != null) {
             try {
                 dbConnection.close();
@@ -30,6 +30,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         }
     }
 
+    @Override
     public void signUpUser(String login, String password){
         String insert = "INSERT INTO " + Const.USER_TABLE + "(" +
                 Const.USER_LOGIN + "," + Const.USER_PASSWORD + ")" +
@@ -45,6 +46,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         closeConnection();
     }
 
+    @Override
     public Boolean getUserRegistr(String login) {
         ResultSet resSet;
 
@@ -66,6 +68,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         return false;
     }
 
+    @Override
     public Boolean getUserAuth(String login, String password) {
         ResultSet resSet;
 
@@ -88,6 +91,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         return false;
     }
 
+    @Override
     public void InsertApplication(String id_user, Integer applic_poz, String applic_topic, String applic_contavt, String applic_comment) {
         String insert = "INSERT INTO " + Const.USER_APPLIC_TABLE + "(" +
                 Const.USER_APPLIC_ID_USER + "," + Const.USER_APPLIC_POZ + "," + Const.USER_APPLIC_TOPIC + "," + Const.USER_APPLIC_CONTACT + "," + Const.USER_APPLIC_COMMENT + ")" +
@@ -107,6 +111,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         closeConnection();
     }
 
+    @Override
     public String GetId(String login) {
 
         ResultSet resSet = null;
@@ -130,6 +135,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         return id;
     }
 
+    @Override
     public Integer GetPoz(String id_user) {
 
         ResultSet resSet = null;
@@ -152,6 +158,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         return n;
     }
 
+    @Override
     public void DeleteApplication(String id_application) {
 
         String delete = "DELETE FROM " + Const.USER_APPLIC_TABLE + " WHERE " +
@@ -166,6 +173,7 @@ public class DatabaseHandler extends Configs implements IDateBaseHandler {
         closeConnection();
     }
 
+    @Override
     public ArrayList<ArrayList<String>> GetApplication(String id_user) {
 
         ResultSet resSet = null;

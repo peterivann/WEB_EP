@@ -1,4 +1,4 @@
-package com.example.web_ep.ObjectData;
+package com.example.web_ep.model.ObjectData;
 
 public class Application {
     private int poz;
