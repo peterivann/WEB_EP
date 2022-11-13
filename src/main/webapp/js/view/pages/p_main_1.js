@@ -1,7 +1,9 @@
-var page_main_1 = (function() {
+import {render_main_3} from './p_main_3.js';
+import {render_main_2} from './p_main_2.js';
+import {render_sign_in} from './p_sign_in.js';
 
         function _render() {
-            page = document.querySelector("body");
+            let page = document.querySelector("body");
             page.innerHTML = "<div class=\"main_2\">\n" +
                 "    <div>\n" +
                 "        <div class=\"menu\">\n" +
@@ -12,7 +14,7 @@ var page_main_1 = (function() {
                 "                <a id=\"main_3\">My applications</a>\n" +
                 "                <div id=\"indicator\"></div>\n" +
                 "            </nav>\n" +
-                "            <h3>Hello, <span>"+ localStorage.getItem("login") +"</span></h3>\n" +
+                "            <h3>Hello, <span>" + localStorage.getItem("login") + "</span></h3>\n" +
                 "            <a id=\"exit\"><img class=\"logo_2\" src=\"exit.png\" width=\"25\" height=\"25\" style=\"margin-left: 35px; margin-top: -30px\" alt=\"\"></a>\n" +
                 "        </div>\n" +
                 "        <h1>Repair Service (<span>Computer</span> & <span>Mobile Phone</span>)</h1>\n" +
@@ -65,23 +67,17 @@ var page_main_1 = (function() {
                 "    </div>\n" +
                 "</div>\n"
 
-            var bt_exit = document.getElementById("exit");
-            var bt_main_1 = document.getElementById("main_1");
-            var bt_main_2 = document.getElementById("main_2");
-            var bt_main_3 = document.getElementById("main_3");
+            let bt_exit = document.getElementById("exit");
+            let bt_main_1 = document.getElementById("main_1");
+            let bt_main_2 = document.getElementById("main_2");
+            let bt_main_3 = document.getElementById("main_3");
 
-            bt_exit.addEventListener("click", page_sign_in.render);
-            bt_main_1.addEventListener("click", page_main_1.render);
-            bt_main_2.addEventListener("click", page_main_2.render);
-            bt_main_3.addEventListener("click", page_main_3.render);
+            bt_exit.addEventListener("click", render_sign_in);
+            bt_main_1.addEventListener("click", render_main_1);
+            bt_main_2.addEventListener("click", render_main_2);
+            bt_main_3.addEventListener("click", render_main_3);
         }
 
-        function _init() {
+        export function render_main_1(){
             _render();
         }
-
-        return {
-            render: _init
-        };
-    }
-)();

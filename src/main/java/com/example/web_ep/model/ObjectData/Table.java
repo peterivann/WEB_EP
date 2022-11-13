@@ -2,7 +2,7 @@ package com.example.web_ep.model.ObjectData;
 
 import java.util.ArrayList;
 
-public class Table implements ITable {
+public class Table{
     private ArrayList<ArrayList<String>> arr;
 
     public ArrayList<ArrayList<String>> getArr() {

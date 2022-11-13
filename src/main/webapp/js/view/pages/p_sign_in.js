@@ -1,40 +1,42 @@
-var page_sign_in = (function() {
+import {render_sign_up} from './p_sign_up.js';
+import {render_main_1} from "./p_main_1.js";
+import {User} from "../../model/user_model.js";
+import {autoris} from "../../model/user_model.js";
 
-        function auto_() {
-            var inp_login = document.getElementById("login_in").value;
-            var inp_pass = document.getElementById("pass_in").value;
-            if (inp_pass != "" && inp_login != "") {
+        async function auto_() {
+            let inp_login = document.getElementById("login_in").value;
+            let inp_pass = document.getElementById("pass_in").value;
+            if (inp_pass !== "" && inp_login !== "") {
 
-                var user_ = {
+                let user_ = {
                     login: inp_login,
                     pass: inp_pass,
-                    hash : 0
+                    hash: 0
+                };
+                let user = new User();
+
+                user.set(user_);
+
+                let dat = await autoris(user);
+                let t = document.getElementById("massage_1");
+                if (dat.status === 200) {
+                    localStorage.setItem("login", inp_login);
+                    localStorage.setItem("token", dat.res.hash);
+                    render_main_1();
+                } else if (dat.status === 400) {
+                    document.getElementById("login_in").value = "";
+                    document.getElementById("pass_in").value = "";
+                    t.textContent = "User not found";
                 }
-                var user = new user_model.user();
 
-                user.set(user_)
-
-                user_model.auto(function (res, stat){
-                    var t = document.getElementById("massage_1");
-                    if (stat == 200) {
-                        localStorage.setItem("login", inp_login);
-                        localStorage.setItem("token", res.hash);
-                        page_main_1.render();
-                    } else {
-                        document.getElementById("login_in").value = "";
-                        document.getElementById("pass_in").value = "";
-                        t.textContent = "User not found";
-                    }
-                }, user)
-            }
-            else {
-                var t = document.getElementById("massage_1");
+            } else {
+                let t = document.getElementById("massage_1");
                 t.textContent = "Not all fields were filled in";
             }
         }
 
         function _render() {
-            page = document.querySelector("body");
+            let page = document.querySelector("body");
             page.innerHTML = "<div class=\"main\">\n" +
                 "    <div>\n" +
                 "        <h1>Sign <span>in</span></h1>\n" +
@@ -54,19 +56,13 @@ var page_sign_in = (function() {
                 "    </div>\n" +
                 "</div>\n"
 
-            var bt_a_sign_up = document.getElementById("a_sign_up");
-            var bt_come_in = document.getElementById("come_in");
+            let bt_a_sign_up = document.getElementById("a_sign_up");
+            let bt_come_in = document.getElementById("come_in");
 
-            bt_a_sign_up.addEventListener("click", page_sign_up.render);
+            bt_a_sign_up.addEventListener("click", render_sign_up);
             bt_come_in.addEventListener("click", auto_);
         }
 
-        function _init() {
+        export function render_sign_in() {
             _render();
         }
-
-        return {
-            render: _init
-        };
-    }
-)();

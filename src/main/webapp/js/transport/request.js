@@ -1,47 +1,107 @@
-function request(data, method, url, callback, error_hash){
+function request(data, method, url) {
 
-    var xhr = new XMLHttpRequest();
-    var flagAsync = true;
-    if (method != "DELETE" && method != "GET") {
-        var body = JSON.stringify(data)
+    if(method === "POST") {
+        return new Promise((resolve) => {
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    "LOGIN": localStorage.getItem("login"),
+                    "TOKEN": localStorage.getItem("token")
+                },
+                body: JSON.stringify(data)
+            })
+                .then(async (response) => {
+                    if (response.status === 200) {
+                        return {
+                            status: 200,
+                            res: await response.json()
+                        }
+                    } else if (response.status === 400) {
+                        return {
+                            status: 400,
+                        }
+                    }
+                })
+                .then((data) => {
+                    resolve(data);
+                });
+        });
     }
-    xhr.open(method, url, flagAsync);
-    xhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
-    xhr.setRequestHeader("LOGIN", localStorage.getItem("login"));
-    xhr.setRequestHeader("TOKEN", localStorage.getItem("token"));
 
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4) {
-            if(xhr.status != 404) {
-                if (method != "DELETE") {
-                    if(xhr.status != 400) {
-                        var res = JSON.parse(xhr.responseText);
-                        callback(res, this.status);
-                    }
-                    else{
-                        callback();
-                    }
+    else if(method === "DELETE") {
+        return new Promise((resolve) => {
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    "LOGIN": localStorage.getItem("login"),
+                    "TOKEN": localStorage.getItem("token"),
+                    "ARR": data
                 }
-                else {
-                    callback();
+            })
+                .then(async (response) => {
+                    if (response.status === 404) {
+                        return {
+                            status: 404,
+                        }
+                    } else if (response.status === 200) {
+                        return {
+                            status: 200,
+                        }
+                    }
+                })
+                .then((data) => {
+                    resolve(data);
+                });
+        });
+    }
+
+    else if(method === "GET") {
+        return new Promise((resolve) => {
+            fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    "LOGIN": localStorage.getItem("login"),
+                    "TOKEN": localStorage.getItem("token"),
                 }
-            }
-            else {
-                error_hash();
-            }
-        }
-    };
-    if (method == "DELETE"){
-        xhr.setRequestHeader("ARR", data);
-        xhr.send();
+            })
+                .then(async (response) => {
+                    if (response.status === 404) {
+                        return {
+                            status: 404,
+                        }
+                    } else if (response.status === 200) {
+                        return {
+                            status: 200,
+                            res: await response.json()
+                        }
+                    }
+                })
+                .then((data) => {
+                    resolve(data);
+                });
+        });
     }
-    else if(method == "GET"){
-        xhr.send();
-    }
-    else if(xhr.status == 400){
-        xhr.send();
-    }
-    else {
-        xhr.send(body);
-    }
+}
+
+export async function requestAddApl(apl) {
+    return await request(apl, "POST", "api/applications");
+}
+
+export async function requestTable(del) {
+    return await request(del, "GET", "api/applications/user");
+}
+
+export async function requestDel(arrr) {
+    return await request(arrr, "DELETE", "api/applications/user/application");
+}
+
+export async function requestAuth(user) {
+    return await request(user, "POST", "api/users/user");
+}
+
+export async function requestReg(user) {
+    return await request(user, "POST", "api/users");
 }

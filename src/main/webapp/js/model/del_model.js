@@ -1,34 +1,26 @@
-var del_model = (function() {
-        var table = [];
-        var arr = [table];
+import {requestDel, requestTable} from "../transport/request.js";
 
-        function Del() {
-            this.del = {
-                arr: arr
-            };
+        class Del{
+            constructor() {
+                this.del = {
+                    arr: [[]]
+                };
+            }
+            get() {
+                return this.del;
+            }
+
+            set(del) {
+                this.del = del;
+            }
         }
 
-        Del.prototype.get = function() {
-            return this.del;
+        let delet = new Del();
+
+        export async function tabl() {
+            return await requestTable(delet.get())
         }
 
-        Del.prototype.set = function(del) {
-            this.del = del;
+        export async function dele(arrr) {
+            return await requestDel(arrr);
         }
-
-        var del = new Del();
-
-        function table_ (callback) {
-            request(del.get(), "GET", "api/applications/user", callback, function() {page_sign_in.render()});
-        }
-
-        function del_ (callback) {
-            request(arrr, "DELETE", "api/applications/user/application", callback, function() {page_sign_in.render()});
-        }
-
-        return {
-            del: del_,
-            table: table_,
-        };
-    }
-)();

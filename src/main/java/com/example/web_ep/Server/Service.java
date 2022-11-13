@@ -2,7 +2,6 @@ package com.example.web_ep.Server;
 
 import com.example.web_ep.model.ObjectData.Application;
 import com.example.web_ep.model.ObjectData.User;
-import com.example.web_ep.model.ObjectData.ITable;
 import com.example.web_ep.model.IModel;
 
 import jakarta.ws.rs.DELETE;
@@ -26,9 +25,6 @@ import jakarta.inject.Inject;
 
 @Path("/")
 public class Service {
-
-    @Inject
-    ITable table;
     @Inject
     IModel model;
     static String salt = "sadfasdfasdhndk";
@@ -149,8 +145,7 @@ public class Service {
             int b = (salt + login + salt).hashCode();
 
             if (token.equals(Integer.toString(b))){
-               model.GetApl(table, login);
-                resultJSON = jsonb.toJson(table);
+                resultJSON = jsonb.toJson(model.GetApl(login));
             }
             else{
                 return Response.status(Response.Status.NOT_FOUND).build();

@@ -1,29 +1,25 @@
-var appl_model = (function() {
+import {requestAddApl} from '../transport/request.js';
 
-        function Application() {
-            this.application = {
-                poz: 0,
-                topic: undefined,
-                contact: undefined,
-                comment: undefined,
-            };
-        }
+        export class Application{
+            constructor() {
+                this.application = {
+                    poz: 0,
+                    topic: undefined,
+                    contact: undefined,
+                    comment: undefined,
+                };
+            }
 
-        Application.prototype.get = function() {
+        get() {
             return this.application;
         }
 
-        Application.prototype.set = function(application) {
+        set(application) {
             this.application = application;
         }
 
-        function add_apl_(callback, application) {
-            request(application.get(), "POST", "api/applications", callback, function() {page_sign_in.render()});
         }
 
-        return {
-            add_apl: add_apl_,
-            application: Application
-        };
-    }
-)();
+        export async function add_aplic(application) {
+            return await requestAddApl(application.get());
+        }

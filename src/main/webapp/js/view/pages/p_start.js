@@ -1,4 +1,7 @@
-var page_start = (function() {
+import {render_sign_up} from './p_sign_up.js';
+import {render_sign_in} from './p_sign_in.js';
+
+        let page = undefined;
 
         function _render() {
             page.innerHTML = "<div class=\"main\">\n" +
@@ -12,20 +15,14 @@ var page_start = (function() {
                 "                </div>\n" +
                 "            </div>"
 
-            var bt_sign_in = document.getElementById("sign_in");
-            var bt_sign_up = document.getElementById("sign_up");
+            let bt_sign_in = document.getElementById("sign_in");
+            let bt_sign_up = document.getElementById("sign_up");
 
-            bt_sign_in.addEventListener("click", page_sign_in.render);
-            bt_sign_up.addEventListener("click", page_sign_up.render);
+            bt_sign_in.addEventListener("click", render_sign_in);
+            bt_sign_up.addEventListener("click", render_sign_up);
         }
 
-        function _init(_page) {
+        export function render(_page) {
             page = _page;
             _render();
         }
-
-        return {
-            render: _init
-        };
-    }
-)();

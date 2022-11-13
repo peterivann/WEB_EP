@@ -1,34 +1,42 @@
-var page_main_2 = (function() {
+import {render_main_3} from './p_main_3.js';
+import {render_main_1} from './p_main_1.js';
+import {render_sign_in} from './p_sign_in.js';
+import {Application} from "../../model/appl_model.js";
+import {add_aplic} from "../../model/appl_model.js";
 
-        function add_apl() {
-            var inp_topic = document.querySelector('input[name="test"]:checked').value;
-            var inp_contact = document.getElementById("contact_in").value;
-            var inp_comment = document.getElementById("comment_in").value;
-            if (inp_topic != "" && inp_contact != "" && inp_comment != "") {
+        async function add_apl() {
+            let inp_topic = document.querySelector('input[name="test"]:checked').value;
+            let inp_contact = document.getElementById("contact_in").value;
+            let inp_comment = document.getElementById("comment_in").value;
+            if (inp_topic !== "" && inp_contact !== "" && inp_comment !== "") {
 
-                var application_ = {
+                let application_ = {
                     poz: 0,
                     topic: inp_topic,
                     contact: inp_contact,
                     comment: inp_comment,
-                }
-                var application = new appl_model.application();
+                };
+                let application = new Application();
 
                 application.set(application_)
 
-                appl_model.add_apl(function (res){
-                    document.querySelector('input[name="test"]:checked').value = "";
-                    document.getElementById("contact_in").value = "";
-                    document.getElementById("comment_in").value = "";
-                }, application)
-            }
-            else {
+                let dat = await add_aplic(application);
+
+               if (dat.status === 200) {
+                   document.querySelector('input[name="test"]:checked').value = "";
+                   document.getElementById("contact_in").value = "";
+                   document.getElementById("comment_in").value = "";
+               } else if (dat.status === 404) {
+                   render_sign_in()
+               }
+
+            } else {
                 alert("Not all fields were filled in");
             }
         }
 
         function _render() {
-            page = document.querySelector("body");
+            let page = document.querySelector("body");
             page.innerHTML = "<div class=\"main_2\">\n" +
                 "    <div>\n" +
                 "        <div class=\"menu\">\n" +
@@ -39,7 +47,7 @@ var page_main_2 = (function() {
                 "                <a id=\"main_3\">My applications</a>\n" +
                 "                <div id=\"indicator1\"></div>\n" +
                 "            </nav>\n" +
-                "            <h3>Hello, <span>"+ localStorage.getItem("login") +"</span></h3>\n" +
+                "            <h3>Hello, <span>" + localStorage.getItem("login") + "</span></h3>\n" +
                 "            <a id=\"exit\"><img class=\"logo_2\" src=\"exit.png\" width=\"25\" height=\"25\" style=\"margin-left: 35px; margin-top: -30px\" alt=\"\"></a>\n" +
                 "        </div>\n" +
                 "        <div class=\"apli\">\n" +
@@ -73,25 +81,19 @@ var page_main_2 = (function() {
                 "    </div>\n" +
                 "</div>\n"
 
-            var bt_exit = document.getElementById("exit");
-            var bt_main_1 = document.getElementById("main_1");
-            var bt_main_2 = document.getElementById("main_2");
-            var bt_main_3 = document.getElementById("main_3");
-            var bt_ok = document.getElementById("okey");
+            let bt_exit = document.getElementById("exit");
+            let bt_main_1 = document.getElementById("main_1");
+            let bt_main_2 = document.getElementById("main_2");
+            let bt_main_3 = document.getElementById("main_3");
+            let bt_ok = document.getElementById("okey");
 
-            bt_exit.addEventListener("click", page_sign_in.render);
-            bt_main_1.addEventListener("click", page_main_1.render);
-            bt_main_2.addEventListener("click", page_main_2.render);
-            bt_main_3.addEventListener("click", page_main_3.render);
+            bt_exit.addEventListener("click", render_sign_in);
+            bt_main_1.addEventListener("click", render_main_1);
+            bt_main_2.addEventListener("click", render_main_2);
+            bt_main_3.addEventListener("click", render_main_3);
             bt_ok.addEventListener("click", add_apl);
         }
 
-        function _init() {
+        export function render_main_2() {
             _render();
         }
-
-        return {
-            render: _init
-        };
-    }
-)();

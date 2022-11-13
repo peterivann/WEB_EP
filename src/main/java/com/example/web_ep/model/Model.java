@@ -26,9 +26,11 @@ public class Model implements IModel {
         db.InsertApplication(db.GetId(login), db.GetPoz(db.GetId(login)), application.getTopic(), application.getContact(), application.getComment());
     }
     @Override
-    public void GetApl(ITable table , String login){
+    public Table GetApl(String login){
+        Table table = new Table();
         ArrayList<ArrayList<String>> arr = db.GetApplication(db.GetId(login));
         table.setArr(arr);
+        return table;
     }
     @Override
     public void DeleteApl(String delete){

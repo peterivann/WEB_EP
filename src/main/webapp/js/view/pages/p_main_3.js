@@ -1,39 +1,56 @@
-var page_main_3 = (function() {
-        function table() {
-                del_model.table(function (res){
-                    var n = 0;
-                    var p_table = document.getElementById("table_app");
-                    str = "<tr>\n" +
-                        "                    <th class=\"aaa\"></th>\n" +
-                        "                    <th>№</th>\n" +
-                        "                    <th>Topic</th>\n" +
-                        "                    <th>Contact</th>\n" +
-                        "                    <th>Comment</th>\n" +
-                        "                </tr>\n";
-                    for (var i = 0; i < res.arr.length; i++) {
-                        n = n + 1;
-                        str = str + "<tr class=\"applicat\">" +
-                            "<th class=\"aaa\">" + res.arr[i][0] + "</th>" +
-                            "<th>" + n + "</th>" +
-                            "<th>" + res.arr[i][1] + "</th>" +
-                            "<th>" + res.arr[i][2] + "</th>" +
-                            "<th>" + res.arr[i][3] + "</th>" +
-                            "</tr>";
-                    }
-                    p_table.innerHTML = str;
+import select from './select.js';
+import {render_main_1} from './p_main_1.js';
+import {render_main_2} from './p_main_2.js';
+import {render_sign_in} from './p_sign_in.js';
+import {dele} from "../../model/del_model.js";
+import {tabl} from "../../model/del_model.js";
 
-                    select();
-                })
+let a = '';
+export default function mas(b) {
+    a = b;
+}
+        async function table() {
+            let dat = await tabl();
+            if (dat.status === 200){
+                let n = 0;
+                let p_table = document.getElementById("table_app");
+                let str = "<tr>\n" +
+                    "                    <th class=\"aaa\"></th>\n" +
+                    "                    <th>№</th>\n" +
+                    "                    <th>Topic</th>\n" +
+                    "                    <th>Contact</th>\n" +
+                    "                    <th>Comment</th>\n" +
+                    "                </tr>\n";
+                for (let i = 0; i < dat.res.arr.length; i++) {
+                    n = n + 1;
+                    str = str + "<tr class=\"applicat\">" +
+                        "<th class=\"aaa\">" + dat.res.arr[i][0] + "</th>" +
+                        "<th>" + n + "</th>" +
+                        "<th>" + dat.res.arr[i][1] + "</th>" +
+                        "<th>" + dat.res.arr[i][2] + "</th>" +
+                        "<th>" + dat.res.arr[i][3] + "</th>" +
+                        "</tr>";
+                }
+                p_table.innerHTML = str;
+
+                select();
+
             }
+            else if (dat.status === 404){
+                render_sign_in()
+            }
+        }
 
-        function del() {
-                del_model.del(function (){
-                    page_main_3.render();
-                });
+        async function del() {
+            let dat = await dele(a);
+            if (dat.status === 200)
+                render_main_3();
+            else if (dat.status === 404)
+                render_sign_in();
         }
 
         function _render() {
-            page = document.querySelector("body");
+            let page = document.querySelector("body");
             page.innerHTML = "<div class=\"main_2\">\n" +
                 "    <div>\n" +
                 "        <div class=\"menu\">\n" +
@@ -44,7 +61,7 @@ var page_main_3 = (function() {
                 "                <a id=\"main_3\">My applications</a>\n" +
                 "                <div id=\"indicator2\"></div>\n" +
                 "            </nav>\n" +
-                "            <h3>Hello, <span>"+ localStorage.getItem("login") +"</span></h3>\n" +
+                "            <h3>Hello, <span>" + localStorage.getItem("login") + "</span></h3>\n" +
                 "            <a id=\"exit\"><img class=\"logo_2\" src=\"exit.png\" width=\"25\" height=\"25\" style=\"margin-left: 35px; margin-top: -30px\" alt=\"\"></a>\n" +
                 "        </div>\n" +
                 "            <h1><span>Your</span> applications</h1>\n" +
@@ -64,25 +81,19 @@ var page_main_3 = (function() {
 
             table();
 
-            var bt_exit = document.getElementById("exit");
-            var bt_del = document.getElementById("delete_");
-            var bt_main_1 = document.getElementById("main_1");
-            var bt_main_2 = document.getElementById("main_2");
-            var bt_main_3 = document.getElementById("main_3");
+            let bt_exit = document.getElementById("exit");
+            let bt_del = document.getElementById("delete_");
+            let bt_main_1 = document.getElementById("main_1");
+            let bt_main_2 = document.getElementById("main_2");
+            let bt_main_3 = document.getElementById("main_3");
 
-            bt_exit.addEventListener("click", page_sign_in.render);
+            bt_exit.addEventListener("click", render_sign_in);
             bt_del.addEventListener("click", del);
-            bt_main_1.addEventListener("click", page_main_1.render);
-            bt_main_2.addEventListener("click", page_main_2.render);
-            bt_main_3.addEventListener("click", page_main_3.render)
+            bt_main_1.addEventListener("click", render_main_1);
+            bt_main_2.addEventListener("click", render_main_2);
+            bt_main_3.addEventListener("click", render_main_3)
         }
 
-        function _init() {
+        export function render_main_3() {
             _render();
         }
-
-        return {
-            render: _init
-        };
-    }
-)();

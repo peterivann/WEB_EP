@@ -1,33 +1,26 @@
-var user_model = (function() {
+import {requestAuth, requestReg} from "../transport/request.js";
 
-        function User() {
-            this.user = {
-                login: undefined,
-                pass: undefined,
-                hash: 0
-            };
+        export class User {
+            constructor() {
+                this.user = {
+                    login: undefined,
+                    pass: undefined,
+                    hash: 0
+                };
+            }
+            get() {
+                return this.user;
+            }
+
+            set(user) {
+                this.user = user;
+            }
         }
 
-        User.prototype.get = function() {
-            return this.user;
+        export async function autoris(user) {
+            return await requestAuth(user.get());
         }
 
-        User.prototype.set = function(user) {
-            this.user = user;
+        export function registr(user) {
+            return requestReg(user.get());
         }
-
-        function auto_(callback, user) {
-            request(user.get(), "POST", "api/users/user", callback, function() {page_sign_in.render()});
-        }
-
-        function reg_(callback, user) {
-            request(user.get(), "POST", "api/users", callback, function() {page_sign_in.render()});
-        }
-
-        return {
-            auto: auto_,
-            reg: reg_,
-            user: User
-        };
-    }
-)();
