@@ -11,6 +11,7 @@ export default function mas(b) {
 }
         async function table() {
             let dat = await tabl();
+            let res = dat.res;
             if (dat.status === 200){
                 let n = 0;
                 let p_table = document.getElementById("table_app");
@@ -21,14 +22,14 @@ export default function mas(b) {
                     "                    <th>Contact</th>\n" +
                     "                    <th>Comment</th>\n" +
                     "                </tr>\n";
-                for (let i = 0; i < dat.res.arr.length; i++) {
+                for (let i = 0; i < res.length; i++) {
                     n = n + 1;
                     str = str + "<tr class=\"applicat\">" +
-                        "<th class=\"aaa\">" + dat.res.arr[i][0] + "</th>" +
+                        "<th class=\"aaa\">" + res[i].id + "</th>" +
                         "<th>" + n + "</th>" +
-                        "<th>" + dat.res.arr[i][1] + "</th>" +
-                        "<th>" + dat.res.arr[i][2] + "</th>" +
-                        "<th>" + dat.res.arr[i][3] + "</th>" +
+                        "<th>" + res[i].topic + "</th>" +
+                        "<th>" + res[i].contact + "</th>" +
+                        "<th>" + res[i].comment + "</th>" +
                         "</tr>";
                 }
                 p_table.innerHTML = str;

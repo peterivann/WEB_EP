@@ -1,43 +1,42 @@
 package com.example.web_ep.model;
 
-import com.example.web_ep.DB.DateBaseFactory;
-import com.example.web_ep.DB.IDateBaseHandler;
+import com.example.web_ep.DB.IRepApplications;
+import com.example.web_ep.DB.IRepUsers;
 import com.example.web_ep.model.ObjectData.*;
+import jakarta.inject.Inject;
 
 import java.util.ArrayList;
 
 public class Model implements IModel {
-
-    private final IDateBaseHandler db = DateBaseFactory.CreateDB();
+    @Inject
+    private IRepUsers dbU;
+    @Inject
+    private IRepApplications dbA;
     @Override
     public boolean AuthUser(User user){
-        return db.getUserAuth(user.getLogin(), user.getPass());
+        return dbU.getUserAuth(user.getLogin(), user.getPass());
     }
     @Override
     public boolean CheckUser(User user){
-        return db.getUserRegistr(user.getLogin());
+        return dbU.getUserRegistr(user.getLogin());
     }
     @Override
     public void RegUser(User user){
-        db.signUpUser(user.getLogin(), user.getPass());
+        dbU.signUpUser(user.getLogin(), user.getPass());
     }
     @Override
     public void InsertApl(Application application, String login){
-        db.InsertApplication(db.GetId(login), db.GetPoz(db.GetId(login)), application.getTopic(), application.getContact(), application.getComment());
+        dbA.InsertApplication(dbU.GetId(login), dbA.GetPoz(dbU.GetId(login)), application.getTopic(), application.getContact(), application.getComment());
     }
     @Override
-    public Table GetApl(String login){
-        Table table = new Table();
-        ArrayList<ArrayList<String>> arr = db.GetApplication(db.GetId(login));
-        table.setArr(arr);
-        return table;
+    public ArrayList<Application> GetApl(String login){
+        return dbA.GetApplication(dbU.GetId(login));
     }
     @Override
     public void DeleteApl(String delete){
         String[] a = delete.split(" ");
-
         for (String strings : a) {
-            db.DeleteApplication(strings);
+            dbA.DeleteApplication(Integer.parseInt(strings));
         }
     }
 }

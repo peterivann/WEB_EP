@@ -3,7 +3,7 @@ import {requestDel, requestTable} from "../transport/request.js";
         class Del{
             constructor() {
                 this.del = {
-                    arr: [[]]
+                    arr: []
                 };
             }
             get() {

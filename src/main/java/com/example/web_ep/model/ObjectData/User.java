@@ -2,6 +2,7 @@ package com.example.web_ep.model.ObjectData;
 
 public class User
 {
+    private int id;
     private String login;
     private String pass;
     private int hash;
@@ -27,5 +28,13 @@ public class User
 
     public void setHash(int hash) {
         this.hash = hash;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
