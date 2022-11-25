@@ -1,4 +1,4 @@
-package com.example.web_ep.DB;
+package Pack.model.API.Out;
 
 public interface IRepUsers {
     public void signUpUser(String login, String password);

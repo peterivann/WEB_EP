@@ -19,7 +19,12 @@ function request(data, method, url) {
                         }
                     } else if (response.status === 400) {
                         return {
-                            status: 400,
+                            status: 404,
+                        }
+                    }
+                    else if (response.status === 404) {
+                        return {
+                            status: 404,
                         }
                     }
                 })

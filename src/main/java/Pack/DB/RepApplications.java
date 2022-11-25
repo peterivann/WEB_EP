@@ -1,10 +1,14 @@
-package com.example.web_ep.DB;
+package Pack.DB;
 
-import com.example.web_ep.model.ObjectData.Application;
+import Pack.model.API.ObjectData.Application;
+import Pack.model.API.Out.IRepApplications;
+
 import jakarta.annotation.Resource;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
+
 import jakarta.transaction.UserTransaction;
 
 import java.util.ArrayList;

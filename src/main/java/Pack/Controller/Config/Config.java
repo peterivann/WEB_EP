@@ -1,4 +1,4 @@
-package com.example.web_ep.Server;
+package Pack.Controller.Config;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;

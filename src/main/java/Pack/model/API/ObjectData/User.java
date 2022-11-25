@@ -1,4 +1,4 @@
-package com.example.web_ep.model.ObjectData;
+package Pack.model.API.ObjectData;
 
 public class User
 {

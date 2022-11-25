@@ -1,17 +1,24 @@
-package com.example.web_ep.model;
+package Pack.model;
 
-import com.example.web_ep.DB.IRepApplications;
-import com.example.web_ep.DB.IRepUsers;
-import com.example.web_ep.model.ObjectData.*;
-import jakarta.inject.Inject;
+import Pack.model.API.In.IModel;
+import Pack.model.API.ObjectData.Application;
+import Pack.model.API.ObjectData.User;
+import Pack.model.API.Out.IRepApplications;
+import Pack.model.API.Out.IRepUsers;
 
 import java.util.ArrayList;
 
 public class Model implements IModel {
-    @Inject
-    private IRepUsers dbU;
-    @Inject
-    private IRepApplications dbA;
+    IRepUsers dbU;
+    IRepApplications dbA;
+    @Override
+    public void injectRepUsers(IRepUsers dbU) {
+        this.dbU = dbU;
+    }
+    @Override
+    public void injectRepApplications(IRepApplications dbA) {
+        this.dbA = dbA;
+    }
     @Override
     public boolean AuthUser(User user){
         return dbU.getUserAuth(user.getLogin(), user.getPass());

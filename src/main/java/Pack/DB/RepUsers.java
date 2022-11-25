@@ -1,14 +1,18 @@
-package com.example.web_ep.DB;
+package Pack.DB;
+
+import Pack.model.API.Out.IRepUsers;
 
 import jakarta.annotation.Resource;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceUnit;
+
 import jakarta.transaction.UserTransaction;
 
 import java.util.List;
 
-public class RepUsers implements IRepUsers{
+public class RepUsers implements IRepUsers {
     @PersistenceUnit(unitName = "local_pg_test_PersistenceUnit")
     private EntityManagerFactory entityManagerFactory;
 

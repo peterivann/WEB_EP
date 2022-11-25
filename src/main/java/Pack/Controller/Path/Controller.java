@@ -1,8 +1,10 @@
-package com.example.web_ep.Server;
+package Pack.Controller.Path;
 
-import com.example.web_ep.model.ObjectData.Application;
-import com.example.web_ep.model.ObjectData.User;
-import com.example.web_ep.model.IModel;
+import Pack.Builder.Built;
+import Pack.Controller.Interceptor.HashRequired;
+import Pack.model.API.ObjectData.Application;
+import Pack.model.API.ObjectData.User;
+import Pack.model.API.In.IModel;
 
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.POST;
@@ -24,8 +26,8 @@ import jakarta.inject.Inject;
 
 
 @Path("/")
-public class Service {
-    @Inject
+public class Controller {
+    @Inject @Built
     IModel model;
     static String salt = "sadfasdfasdhndk";
     @POST
@@ -92,6 +94,7 @@ public class Service {
     }
 
     @POST
+    @HashRequired
     @Path("/applications")
     @Consumes("application/json")
     @Produces("application/json")
@@ -108,18 +111,10 @@ public class Service {
                 throw new Exception("Error while JSON transforming.");
             }
 
-            String token = httpHeaders.getHeaderString("TOKEN");
             String login = httpHeaders.getHeaderString("LOGIN");
 
-            int b = (salt + login + salt).hashCode();
-
-            if (token.equals(Integer.toString(b))){
                model.InsertApl(application, login);
                 resultJSON = jsonb.toJson(application);
-            }
-            else{
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
 
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -128,28 +123,20 @@ public class Service {
     }
 
     @GET
+    @HashRequired
     @Path("/applications/user")
     @Consumes("application/json")
     @Produces("application/json")
     public Response table(@Context HttpHeaders httpHeaders)
     {
         Jsonb jsonb = JsonbBuilder.create();
-        String token;
         String login;
         String resultJSON;
         try {
 
-            token = httpHeaders.getHeaderString("TOKEN");
             login = httpHeaders.getHeaderString("LOGIN");
 
-            int b = (salt + login + salt).hashCode();
-
-            if (token.equals(Integer.toString(b))){
                 resultJSON = jsonb.toJson(model.GetApl(login));
-            }
-            else{
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
 
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
@@ -158,29 +145,20 @@ public class Service {
     }
 
     @DELETE
+    @HashRequired
     @Path("/applications/user/application")
     @Consumes("application/json")
     @Produces("application/json")
     public Response delet(@Context HttpHeaders httpHeaders)
     {
         String delete;
-        String token;
-        String login;
+
         try {
 
             delete = httpHeaders.getHeaderString("ARR");
-            token = httpHeaders.getHeaderString("TOKEN");
-            login = httpHeaders.getHeaderString("LOGIN");
 
-            int b = (salt + login + salt).hashCode();
-
-            if (token.equals(Integer.toString(b))){
                 model.DeleteApl(delete);
                 return Response.status(Response.Status.OK).build();
-            }
-            else{
-                return Response.status(Response.Status.NOT_FOUND).build();
-            }
 
         } catch (Exception e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
