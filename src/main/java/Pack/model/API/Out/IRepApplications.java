@@ -9,4 +9,7 @@ public interface IRepApplications {
     public Integer GetPoz(Integer id_user);
     public void DeleteApplication(Integer id_application);
     public ArrayList<Application> GetApplication(Integer id_user);
+    public ArrayList<Application> GetApplicationAdmin();
+    public void InsertCommentAdmin(Integer id, String com_a);
+    public String GetCommentAdmin(Integer id);
 }

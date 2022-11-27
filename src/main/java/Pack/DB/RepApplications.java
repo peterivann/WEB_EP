@@ -7,12 +7,14 @@ import jakarta.annotation.Resource;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Id;
 import jakarta.persistence.PersistenceUnit;
 
 import jakarta.transaction.UserTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RepApplications implements IRepApplications {
 
@@ -153,7 +155,7 @@ public class RepApplications implements IRepApplications {
             userTransaction.begin();
             entityManager.joinTransaction();
 
-            List<EApplic> APPLICS = entityManager.createQuery("SELECT p FROM EApplic p", EApplic.class).getResultList();
+            List<EApplic> APPLICS = entityManager.createQuery("SELECT p FROM EApplic p WHERE p.Id_user ='" + id_user + "'", EApplic.class).getResultList();
 
             userTransaction.commit();
 
@@ -166,6 +168,7 @@ public class RepApplications implements IRepApplications {
                 applic.setTopic(APPLIC.getTopic());
                 applic.setId(APPLIC.getID());
                 applic.setId_user(APPLIC.getId_user());
+                applic.setStatus(APPLIC.getStatus());
                 a.add(applic);
             }
 
@@ -180,4 +183,120 @@ public class RepApplications implements IRepApplications {
         return a;
     }
 
+    @Override
+    public ArrayList<Application> GetApplicationAdmin() {
+
+        EntityManager entityManager;
+        try {
+            entityManager = entityManagerFactory.createEntityManager();
+        }
+        catch (Exception e) {
+            try {
+                throw new Exception("Error while Entity Manager initializing: " + e.getMessage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        ArrayList<Application> a = new ArrayList<>();
+
+        try {
+            userTransaction.begin();
+            entityManager.joinTransaction();
+
+            List<EApplic> APPLICS = entityManager.createQuery("SELECT p FROM EApplic p", EApplic.class).getResultList();
+
+            userTransaction.commit();
+
+            for (EApplic APPLIC:
+                    APPLICS) {
+                Application applic = new Application();
+                applic.setComment(APPLIC.getComment());
+                applic.setContact(APPLIC.getContact());
+                applic.setPoz(APPLIC.getPoz());
+                applic.setTopic(APPLIC.getTopic());
+                applic.setId(APPLIC.getID());
+                applic.setId_user(APPLIC.getId_user());
+                applic.setStatus(APPLIC.getStatus());
+                a.add(applic);
+            }
+
+        }
+        catch (Exception e) {
+            try {
+                throw new Exception("Error while JPA operating: " + e.getMessage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        return a;
+    }
+
+    @Override
+    public void InsertCommentAdmin(Integer id, String com_a) {
+
+        EntityManager entityManager;
+        try {
+            entityManager = entityManagerFactory.createEntityManager();
+        }
+        catch (Exception e) {
+            try {
+                throw new Exception("Error while Entity Manager initializing: " + e.getMessage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        try {
+
+            userTransaction.begin();
+            entityManager.joinTransaction();
+
+            entityManager.createQuery("UPDATE EApplic p SET p.Admin_comment ='" + com_a + "' WHERE p.ID='" + id + "'").executeUpdate();
+            entityManager.createQuery("UPDATE EApplic p SET p.Status ='" + "checked" + "' WHERE p.ID='" + id + "'").executeUpdate();
+
+            userTransaction.commit();
+        }
+        catch (Exception e) {
+            try {
+                throw new Exception("Error while JPA operating: " + e.getMessage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+    @Override
+    public String GetCommentAdmin(Integer id) {
+
+        EntityManager entityManager;
+        try {
+            entityManager = entityManagerFactory.createEntityManager();
+        }
+        catch (Exception e) {
+            try {
+                throw new Exception("Error while Entity Manager initializing: " + e.getMessage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        try {
+
+            userTransaction.begin();
+            entityManager.joinTransaction();
+
+            List<EApplic> applications = entityManager.createQuery("SELECT p FROM EApplic p WHERE p.ID ='" + id + "'", EApplic.class).getResultList();
+
+            userTransaction.commit();
+
+            return applications.get(0).getAdmin_comment();
+        }
+        catch (Exception e) {
+            try {
+                throw new Exception("Error while JPA operating: " + e.getMessage());
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
 }

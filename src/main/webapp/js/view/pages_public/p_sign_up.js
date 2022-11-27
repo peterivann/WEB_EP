@@ -1,5 +1,5 @@
 import {render_sign_in} from './p_sign_in.js';
-import {render_main_1} from "./p_main_1.js";
+import {render_main_1} from "../pages_user/p_main_1_user.js";
 import {User} from "../../model/user_model.js";
 import {registr} from "../../model/user_model.js";
 
@@ -14,6 +14,7 @@ import {registr} from "../../model/user_model.js";
                     let user_ = {
                         login: inp_login,
                         pass: inp_pass,
+                        role: "user",
                         hash: 0
                     };
                     let user = new User();
@@ -26,7 +27,7 @@ import {registr} from "../../model/user_model.js";
                         localStorage.setItem("login", inp_login);
                         localStorage.setItem("token", dat.res.hash);
                         render_main_1();
-                    } else if (dat.status === 400) {
+                    } else if (dat.status === 404) {
                         document.getElementById("login_in").value = "";
                         document.getElementById("pass_in").value = "";
                         document.getElementById("pass_reg_in").value = "";

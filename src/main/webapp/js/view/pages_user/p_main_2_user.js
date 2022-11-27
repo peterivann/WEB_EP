@@ -1,6 +1,6 @@
-import {render_main_3} from './p_main_3.js';
-import {render_main_1} from './p_main_1.js';
-import {render_sign_in} from './p_sign_in.js';
+import {render_main_3} from './p_main_3_user.js';
+import {render_main_1} from './p_main_1_user.js';
+import {render_sign_in} from '../pages_public/p_sign_in.js';
 import {Application} from "../../model/appl_model.js";
 import {add_aplic} from "../../model/appl_model.js";
 

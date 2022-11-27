@@ -7,6 +7,8 @@ public class Application {
     private String contact;
     private String comment;
     private int id_user;
+    private String status;
+    private String admin_comment;
 
     public Application() {
     }
@@ -57,5 +59,17 @@ public class Application {
 
     public void setId_user(int id_user) {
         this.id_user = id_user;
+    }
+
+    public String getStatus() {return status;}
+
+    public void setStatus(String status) {this.status = status;}
+
+    public String getAdmin_comment() {
+        return admin_comment;
+    }
+
+    public void setAdmin_comment(String admin_comment) {
+        this.admin_comment = admin_comment;
     }
 }

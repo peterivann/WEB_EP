@@ -6,6 +6,7 @@ public class User
     private String login;
     private String pass;
     private int hash;
+    private String role;
     public String getLogin() {
         return login;
     }
@@ -37,4 +38,8 @@ public class User
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getRole() {return role;}
+
+    public void setRole(String role) {this.role = role;}
 }

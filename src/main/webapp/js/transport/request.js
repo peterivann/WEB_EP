@@ -70,6 +70,7 @@ function request(data, method, url) {
                     'Content-Type': 'application/json;charset=utf-8',
                     "LOGIN": localStorage.getItem("login"),
                     "TOKEN": localStorage.getItem("token"),
+                    "ID": data
                 }
             })
                 .then(async (response) => {
@@ -95,11 +96,23 @@ export async function requestAddApl(apl) {
     return await request(apl, "POST", "api/applications");
 }
 
-export async function requestTable(del) {
+export async function requestTableUser(del) {
+    return await request(del, "GET", "api/users/admin");
+}
+
+export async function requestDelUser(arrr) {
+    return await request(arrr, "DELETE", "api/users/admin/user");
+}
+
+export async function requestTableAppAdmin(del) {
+    return await request(del, "GET", "api/applications/user/admin");
+}
+
+export async function requestTableAppUser(del) {
     return await request(del, "GET", "api/applications/user");
 }
 
-export async function requestDel(arrr) {
+export async function requestDelApp(arrr) {
     return await request(arrr, "DELETE", "api/applications/user/application");
 }
 
@@ -109,4 +122,16 @@ export async function requestAuth(user) {
 
 export async function requestReg(user) {
     return await request(user, "POST", "api/users");
+}
+
+export async function requestRole(user) {
+    return await request(user, "POST", "api/users/user/role");
+}
+
+export async function requestAddCommAdmin(apl) {
+    return await request(apl, "POST", "api/applications/application/comm");
+}
+
+export async function requestGetCommAdmin(id) {
+    return await request(id, "GET", "api/applications/application/comm/user");
 }

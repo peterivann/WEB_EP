@@ -14,7 +14,14 @@ public interface IModel {
     boolean AuthUser(User user);
     boolean CheckUser(User user);
     void RegUser(User user);
+    String GetRole(User user);
     void InsertApl(Application application, String login);
+    void InsertRole(Integer id);
+    void InsertCommentAdmin(Integer id, String com_a);
+    String GetCommentAdmin(Integer id);
     ArrayList<Application> GetApl(String login);
+    ArrayList<Application> GetAplAdmin();
+    ArrayList<User> GetUsers();
     void DeleteApl(String delete);
+    void DeleteUser(String delete);
 }

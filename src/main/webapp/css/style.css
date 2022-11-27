@@ -574,5 +574,18 @@ table tbody .applicat:hover {
 }
 
 .delete{
-    margin-top: 150px;
+    margin-top: 100px;
+}
+
+.container-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.response{
+    margin-left: 550px;
+}
+
+.table_admin{
+    width: 80%;
 }

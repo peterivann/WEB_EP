@@ -1,7 +1,8 @@
 import {render_sign_up} from './p_sign_up.js';
-import {render_main_1} from "./p_main_1.js";
+import {render_main_1} from "../pages_user/p_main_1_user.js";
 import {User} from "../../model/user_model.js";
 import {autoris} from "../../model/user_model.js";
+import {render_main_admin_1} from "../pages_admin/p_main_1_admin.js";
 
         async function auto_() {
             let inp_login = document.getElementById("login_in").value;
@@ -22,8 +23,13 @@ import {autoris} from "../../model/user_model.js";
                 if (dat.status === 200) {
                     localStorage.setItem("login", inp_login);
                     localStorage.setItem("token", dat.res.hash);
-                    render_main_1();
-                } else if (dat.status === 400) {
+                    if(dat.res.role === 'admin'){
+                        render_main_admin_1();
+                    }
+                    else{
+                        render_main_1();
+                    }
+                } else if (dat.status === 404) {
                     document.getElementById("login_in").value = "";
                     document.getElementById("pass_in").value = "";
                     t.textContent = "User not found";

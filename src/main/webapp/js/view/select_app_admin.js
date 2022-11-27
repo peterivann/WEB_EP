@@ -1,4 +1,4 @@
-import mas from './p_main_3.js';
+import mas from './pages_admin/p_main_3_admin.js';
 
 export default function select(){
     let tds = document.querySelectorAll('.applicat');

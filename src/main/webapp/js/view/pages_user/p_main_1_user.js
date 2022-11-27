@@ -1,6 +1,6 @@
-import {render_main_3} from './p_main_3.js';
-import {render_main_2} from './p_main_2.js';
-import {render_sign_in} from './p_sign_in.js';
+import {render_main_3} from './p_main_3_user.js';
+import {render_main_2} from './p_main_2_user.js';
+import {render_sign_in} from '../pages_public/p_sign_in.js';
 
         function _render() {
             let page = document.querySelector("body");

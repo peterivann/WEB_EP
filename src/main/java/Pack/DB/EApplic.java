@@ -1,5 +1,6 @@
 package Pack.DB;
 
+import jakarta.enterprise.inject.Default;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -28,6 +29,10 @@ public class EApplic implements Serializable {
     private String Comment;
     @Column(name = "\"id\"")
     private Integer Id_user;
+    @Column(name = "\"status\"")
+    private String Status = "waiting";
+    @Column(name = "\"admin_comment\"")
+    private String Admin_comment;
 
 
     public Integer getPoz() {
@@ -76,5 +81,17 @@ public class EApplic implements Serializable {
 
     public void setId_user(Integer id_user) {
         Id_user = id_user;
+    }
+
+    public String getStatus() {return Status;}
+
+    public void setStatus(String status) {Status = status;}
+
+    public String getAdmin_comment() {
+        return Admin_comment;
+    }
+
+    public void setAdmin_comment(String admin_comment) {
+        Admin_comment = admin_comment;
     }
 }

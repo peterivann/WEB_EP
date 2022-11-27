@@ -1,5 +1,6 @@
 package Pack.DB;
 
+import jakarta.enterprise.inject.Default;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -21,6 +22,8 @@ public class EUser implements Serializable {
     private String Login;
     @Column(name = "\"password\"")
     private String Password;
+    @Column(name = "\"role\"")
+    private String Role = "user";
 
     public Integer getID() {
         return ID;
@@ -45,4 +48,8 @@ public class EUser implements Serializable {
     public void setPassword(String password) {
         Password = password;
     }
+
+    public String getRole() {return Role;}
+
+    public void setRole(String role) {Role = role;}
 }
