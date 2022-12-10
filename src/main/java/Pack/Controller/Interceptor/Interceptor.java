@@ -18,8 +18,9 @@ public class Interceptor implements ContainerRequestFilter {
 
         String token = requestContext.getHeaderString("TOKEN");
         String login = requestContext.getHeaderString("LOGIN");
+        String role = requestContext.getHeaderString("ROLE");
 
-        int b = (salt + login + salt).hashCode();
+        int b = (salt + login + salt + role +salt).hashCode();
 
         if (!token.equals(Integer.toString(b))){
             throw new NotFoundException();

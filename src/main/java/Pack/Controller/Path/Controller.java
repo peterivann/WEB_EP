@@ -47,10 +47,12 @@ public class Controller {
                 throw new Exception("Error while JSON transforming.");
             }
 
+            String role = model.GetRole(user);
+
             if (model.AuthUser(user)){
-                int a = (salt + user.getLogin() + salt).hashCode();
+                int a = (salt + user.getLogin() + salt + role + salt).hashCode();
                 user.setHash(a);
-                user.setRole(model.GetRole(user));
+                user.setRole(role);
             }
             else {
                 return Response.status(Response.Status.BAD_REQUEST).build();
@@ -84,8 +86,10 @@ public class Controller {
             }
             else {
                 model.RegUser(user);
-                int a = (salt + user.getLogin() + salt).hashCode();
+                String role = model.GetRole(user);
+                int a = (salt + user.getLogin() + salt + role + salt).hashCode();
                 user.setHash(a);
+                user.setRole(role);
             }
             resultJSON = jsonb.toJson(user);
         } catch (Exception e) {

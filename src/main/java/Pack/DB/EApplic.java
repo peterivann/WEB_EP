@@ -1,6 +1,6 @@
 package Pack.DB;
 
-import jakarta.enterprise.inject.Default;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

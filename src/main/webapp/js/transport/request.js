@@ -7,7 +7,8 @@ function request(data, method, url) {
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
                     "LOGIN": localStorage.getItem("login"),
-                    "TOKEN": localStorage.getItem("token")
+                    "TOKEN": localStorage.getItem("token"),
+                    "ROLE": localStorage.getItem("role")
                 },
                 body: JSON.stringify(data)
             })
@@ -42,6 +43,7 @@ function request(data, method, url) {
                     'Content-Type': 'application/json;charset=utf-8',
                     "LOGIN": localStorage.getItem("login"),
                     "TOKEN": localStorage.getItem("token"),
+                    "ROLE": localStorage.getItem("role"),
                     "ARR": data
                 }
             })
@@ -70,6 +72,7 @@ function request(data, method, url) {
                     'Content-Type': 'application/json;charset=utf-8',
                     "LOGIN": localStorage.getItem("login"),
                     "TOKEN": localStorage.getItem("token"),
+                    "ROLE": localStorage.getItem("role"),
                     "ID": data
                 }
             })

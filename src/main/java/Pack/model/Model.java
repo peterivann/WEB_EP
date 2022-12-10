@@ -5,7 +5,6 @@ import Pack.model.API.ObjectData.Application;
 import Pack.model.API.ObjectData.User;
 import Pack.model.API.Out.IRepApplications;
 import Pack.model.API.Out.IRepUsers;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 import java.util.ArrayList;
 
