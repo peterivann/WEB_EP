@@ -1,5 +1,5 @@
 import template from './template.js'
-import {add_comment_admin, Application} from "../../../model/appl_model.js";
+import {Application} from "../../../model/appl_model.js";
 import {IdFactory_for_admin} from "../domain/service.js";
 import {RouterFactory} from "../../router/router.js";
 
@@ -52,7 +52,7 @@ class ComPageRespAdmin extends HTMLElement {
         };
         let application = new Application();
         application.set(application_);
-        let dat = await add_comment_admin(application);
+        let dat = await application.add_comment_admin(application);
         if (dat.status === 200)
             router.go('p_3_admin');
         else if (dat.status === 404)

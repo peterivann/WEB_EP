@@ -1,5 +1,5 @@
 import template from './template.js'
-import {autoris, User} from "../../../model/user_model.js";
+import {User} from "../../../model/user_model.js";
 import {RouterFactory} from "../../router/router.js";
 
 let router = RouterFactory.createInstance();
@@ -39,7 +39,7 @@ class ComPageSignIn extends HTMLElement {
 
             user.set(user_);
 
-            let dat = await autoris(user);
+            let dat = await user.autoris(user);
             let t = this._root.querySelector("#massage_1");
             if (dat.status === 200) {
                 localStorage.setItem("login", inp_login);

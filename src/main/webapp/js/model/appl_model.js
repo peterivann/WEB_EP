@@ -21,16 +21,16 @@ import {requestAddApl, requestAddCommAdmin, requestGetCommAdmin} from '../transp
             this.application = application;
         }
 
-        }
+            async add_aplic(application) {
+                return await requestAddApl(application.get());
+            }
 
-        export async function add_aplic(application) {
-            return await requestAddApl(application.get());
-        }
+            async add_comment_admin(application) {
+                return await requestAddCommAdmin(application.get());
+            }
 
-        export async function add_comment_admin(application) {
-            return await requestAddCommAdmin(application.get());
-        }
+            async get_comment_admin(id) {
+                return await requestGetCommAdmin(id);
+            }
 
-        export async function get_comment_admin(id) {
-            return await requestGetCommAdmin(id);
         }

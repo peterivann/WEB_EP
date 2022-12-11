@@ -17,16 +17,16 @@ import {requestAuth, requestReg, requestRole} from "../transport/request.js";
             set(user) {
                 this.user = user;
             }
-        }
 
-        export async function autoris(user) {
-            return await requestAuth(user.get());
-        }
+            async autoris(user) {
+                return await requestAuth(user.get());
+            }
 
-        export function registr(user) {
-            return requestReg(user.get());
-        }
+            async registr(user) {
+                return await requestReg(user.get());
+            }
 
-        export function updateRole(user) {
-            return requestRole(user.get());
+            async updateRole(user) {
+                return await requestRole(user.get());
+            }
         }

@@ -1,6 +1,6 @@
 import template from './template.js'
-import {dele_user, tabl_user} from "../../../model/del_model.js";
-import {updateRole, User} from "../../../model/user_model.js";
+import {Del} from "../../../model/del_model.js";
+import {User} from "../../../model/user_model.js";
 import {RouterFactory} from "../../router/router.js";
 
 let router = RouterFactory.createInstance();
@@ -60,7 +60,8 @@ class ComPageMain2Admin extends HTMLElement {
     }
 
     async table() {
-        let dat = await tabl_user();
+        let delet = new Del();
+        let dat = await delet.tabl_user(delet.get());
         let res = dat.res;
         if (dat.status === 200){
             let n = 0;
@@ -103,7 +104,7 @@ class ComPageMain2Admin extends HTMLElement {
             let user = new User();
             user.set(user_);
 
-            let dat = await updateRole(user);
+            let dat = await user.updateRole(user);
             if (dat.status === 200)
                 router.go('p_2_admin');
             else if (dat.status === 404)
@@ -117,7 +118,8 @@ class ComPageMain2Admin extends HTMLElement {
     }
 
     async del() {
-        let dat = await dele_user(_id);
+        let delet = new Del();
+        let dat = await delet.dele_user(_id);
         if (dat.status === 200)
             router.go('p_2_admin');
         else if (dat.status === 404)

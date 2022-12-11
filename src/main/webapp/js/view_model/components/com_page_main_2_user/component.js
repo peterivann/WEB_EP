@@ -1,5 +1,5 @@
 import template from './template.js'
-import {add_aplic, Application} from "../../../model/appl_model.js";
+import {Application} from "../../../model/appl_model.js";
 import {RouterFactory} from "../../router/router.js";
 
 let router = RouterFactory.createInstance();
@@ -41,7 +41,7 @@ class ComPageMain2User extends HTMLElement {
 
             application.set(application_)
 
-            let dat = await add_aplic(application);
+            let dat = await application.add_aplic(application);
 
             if (dat.status === 200) {
                 this._root.querySelector('input[name="test"]:checked').value = "";

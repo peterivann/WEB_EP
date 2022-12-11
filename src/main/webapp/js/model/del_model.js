@@ -5,7 +5,7 @@ import {
     requestTableUser
 } from "../transport/request.js";
 
-        class Del{
+        export class Del{
             constructor() {
                 this.del = {
                     arr: []
@@ -18,26 +18,23 @@ import {
             set(del) {
                 this.del = del;
             }
-        }
+            async tabl_user(del) {
+                return await requestTableUser(del)
+            }
 
-        let delet = new Del();
+            async dele_user(arrr) {
+                return await requestDelUser(arrr);
+            }
 
-        export async function tabl_user() {
-            return await requestTableUser(delet.get())
-        }
+            async tabl_app_admin(del) {
+                return await requestTableAppAdmin(del)
+            }
 
-        export async function dele_user(arrr) {
-            return await requestDelUser(arrr);
-        }
+            async tabl_app_user(del) {
+                return await requestTableAppUser(del)
+            }
 
-        export async function tabl_app_admin() {
-        return await requestTableAppAdmin(delet.get())
-        }
-
-        export async function tabl_app_user() {
-        return await requestTableAppUser(delet.get())
-        }
-
-        export async function dele_app(arrr) {
-        return await requestDelApp(arrr);
+            async dele_app(arrr) {
+                return await requestDelApp(arrr);
+            }
         }

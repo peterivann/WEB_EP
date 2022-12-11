@@ -1,5 +1,5 @@
 import template from './template.js'
-import {dele_app, tabl_app_admin} from "../../../model/del_model.js";
+import {Del} from "../../../model/del_model.js";
 import {IdFactory_for_admin} from "../domain/service.js";
 import {RouterFactory} from "../../router/router.js";
 
@@ -74,7 +74,8 @@ class ComPageMain3Admin extends HTMLElement {
     }
 
     async table() {
-        let dat = await tabl_app_admin();
+        let delet = new Del();
+        let dat = await delet.tabl_app_admin(delet.get());
         let res = dat.res;
         if (dat.status === 200){
             let n = 0;
@@ -111,7 +112,8 @@ class ComPageMain3Admin extends HTMLElement {
     }
 
     async del() {
-        let dat = await dele_app(_id);
+        let delet = new Del();
+        let dat = await delet.dele_app(_id);
         if (dat.status === 200)
             router.go('p_3_admin');
         else if (dat.status === 404)

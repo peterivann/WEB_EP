@@ -1,5 +1,5 @@
 import template from './template.js'
-import {get_comment_admin} from "../../../model/appl_model.js";
+import {Application} from "../../../model/appl_model.js";
 import {IdFactory_for_user} from "../domain/service.js";
 import {RouterFactory} from "../../router/router.js";
 
@@ -47,7 +47,8 @@ class ComPageRespUser extends HTMLElement {
         console.log(this.a);
         let t = this._root.querySelector("#response_");
         let arr = b.split(" ")
-        let dat = await get_comment_admin(arr[0]);
+        let application = new Application();
+        let dat = await application.get_comment_admin(arr[0]);
         if (dat.status === 200)
             t.textContent = dat.res;
         else if (dat.status === 404)
